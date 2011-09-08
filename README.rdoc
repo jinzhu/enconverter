@@ -11,7 +11,7 @@
 
 2, Add it as middleware to your application.rb
 
-  config.middleware.insert_before ActionDispatch::ParamsParser, Rack::Enconverter, :convert => proc {|env|
+  config.middleware.use Rack::Enconverter, :convert => proc {|env|
     mobile_user_agents = 'palm|nokia|phone|midp|mobi|symbian|chtml|ericsson|minimo'
     agent = env["HTTP_USER_AGENT"].to_s
     agent.downcase =~ Regexp.new(mobile_user_agents)

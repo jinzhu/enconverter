@@ -19,7 +19,7 @@ module Rack
       if convert && [nil, "text/html", "application/xhtml+xml"].include?(header[:content_type]) && response.respond_to?(:body)
         type, charset = header['Content-Type'].split(/;\s*charset=/)
         response.body = process_body(response.body)
-        header['Content-Type'] = "#{type}; charset=shift-jis"
+        header['Content-Type'] = "#{type}; charset=shift_jis"
       end
 
       [status, header, response]
@@ -28,13 +28,13 @@ module Rack
     private
     def process_body(body)
       body_doc = Nokogiri::HTML(body)
-      body_doc.meta_encoding = 'shift-jis'
+      body_doc.meta_encoding = 'shift_jis'
       body_doc.search('meta[@http-equiv="Content-Type"]').map do |e|
-        e["content"] = e["content"].sub(/utf-?8/,'shift-jis')
+        e["content"] = e["content"].sub(/utf-?8/,'shift_jis')
       end
 
       body = body_doc.to_html
-      Iconv.conv('shift-jis//IGNORE','utf-8', body)
+      Iconv.conv('shift_jis//IGNORE','utf-8', body).sub(/charset=utf-?8/,'charset=shift_jis')
     end
 
     def scrub(env)
@@ -57,7 +57,7 @@ module Rack
     end
 
     def convert_japanese(str)
-      Iconv.conv('utf-8//IGNORE','shift-jis', str)
+      Iconv.conv('utf-8//IGNORE','shift_jis', str)
     end
   end
 end

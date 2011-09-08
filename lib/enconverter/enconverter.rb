@@ -1,3 +1,5 @@
+require 'iconv'
+
 module Rack
   class Enconverter
     def initialize(app, options={})

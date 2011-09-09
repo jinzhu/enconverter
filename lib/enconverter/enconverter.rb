@@ -57,7 +57,8 @@ module Rack
     end
 
     def convert_japanese(str)
-      Iconv.conv('utf-8//IGNORE','shift_jis', str)
+      # Iconv.conv('utf-8//IGNORE','shift_jis', str)
+      str
     end
   end
 end

@@ -7,7 +7,7 @@ module Rack
     end
 
     def convert?(env)
-      @convert.is_a?(Proc) && @convert.call(env)
+      @convert.is_a?(Proc) ? @convert.call(env) : true
     end
 
     def call(env)
